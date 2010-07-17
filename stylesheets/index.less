@@ -1,0 +1,28 @@
+@import "colours";
+
+.hfeed {
+	.hentry {
+		.entry-title {
+			display: block;
+			text-decoration: none;
+			margin-bottom: 0.3em;
+			:hover, :active {
+				color: @foreground + #b00;
+			}
+		}
+		.author {
+			padding-right: 1.5em;
+			:before { content: "Started by: "; }
+		}
+		.published {
+			display: none;
+		}
+		.author, .updated {
+			font-size: 0.4em;
+			color: (@foreground + #555);
+		}
+		.updated:before {
+			content: "Last post: ";
+		}
+	}
+}

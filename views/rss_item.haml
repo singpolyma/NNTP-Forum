@@ -1,0 +1,8 @@
+%item
+	%title= item[:subject]
+	%pubDate= item[:date].rfc2822
+	%link
+		http#{@env['HTTPS']?'s':''}://#{@env['HTTP_HOST']}/#{@env['config']['subdirectory']}/thread/#{item[:message_id][1..-2]}
+	%guid(isPermaLink="false")= item[:message_id]
+	%author= item[:from]
+	%description= item[:body]

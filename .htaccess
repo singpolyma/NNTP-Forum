@@ -1,0 +1,10 @@
+IndexIgnore *
+DirectoryIndex config.ru
+AddHandler cgi-script ru
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /config.ru [L]
+</IfModule>

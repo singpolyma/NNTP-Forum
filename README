@@ -1,0 +1,19 @@
+The purpose of this project is to create a fully-functional webforum that uses NNTP instead of SQL to access its data.
+
+This application uses rackup, and should support any server that supports rackup.  It has been tested under Apache2 CGI and the supplied .htaccess file sets the necessary mod_rewrite rules to make that work.
+
+== Dependencies ==
+
+All dependencies **can** be installed without rubygems.  I have done it.  For most of them you can just copy the contents of lib/ into your ruby path.  Most of them are not packaged for real package managers, unfortunately.
+
+* [[http://rack.rubyforge.org|Rack]]
+* [[http://github.com/mynyml/rack-accept-media-types|Rack accept-media-types]]
+* [[http://github.com/joshbuddy/http_router|http_router]]
+** [[http://github.com/hassox/url_mount|url_mount]]
+* [[http://json.rubyforge.org|JSON]]
+* [[http://deveiate.org/projects/BlueCloth/|BlueCloth 2]]
+* [[http://haml-lang.com|Haml]]
+* [[http://lesscss.org|LESS]]
+** [[http://github.com/cloudhead/mutter|mutter]]
+** [[http://treetop.rubyforge.org|Treetop]]
+*** [[http://polyglot.rubyforge.org|polyglot]]

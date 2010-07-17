@@ -1,0 +1,5 @@
+%rss(version="2.0")
+	%channel
+		%title= title
+
+		!= include_for_each @threads, 'views/rss_item.haml'

@@ -1,0 +1,13 @@
+!!! 5
+%html(xmlns="http://www.w3.org/1999/xhtml")
+	!= include 'views/invisible_header.haml'
+
+	%body
+		!= include 'views/visible_header.haml'
+
+		%section
+			%h1
+				= @headers[:subject]
+
+			%ol.hfeed
+				!= include_for_each threads, 'views/thread_summary.haml'

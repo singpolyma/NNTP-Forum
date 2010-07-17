@@ -1,0 +1,15 @@
+%li.hentry
+	%a.entry-title.bookmark(href="thread/#{item[:message_id][1..-2]}")
+		= item[:subject]
+	%span.author
+		-if item[:photo]
+			%img.photo{:src => item[:photo], :alt => "Avatar"}
+		%span.fn
+			= item[:from].sub(/<[^>]*>\s*/,'')
+	%time.published{:datetime => item[:date].iso8601}
+		= item[:date].strftime('%Y-%m-%d')
+	%time.updated{:datetime => (item[:updated] || item[:date]).iso8601}
+		= (item[:updated] || item[:date]).strftime('%Y-%m-%d')
+	-if item[:body]
+		%div.entry-content
+			!= item[:body]

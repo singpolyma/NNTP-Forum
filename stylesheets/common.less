@@ -1,0 +1,52 @@
+@import "colours";
+
+html, body {
+	background: @background;
+	color: @foreground;
+	font-family: sans-serif;
+	padding: 0;
+	margin: 0;
+}
+a {
+	color: @foreground + #00b;
+}
+h1 {
+	font-size: 2em;
+}
+header {
+	display: block;
+	margin: 0;
+	padding-left: 3%;
+	padding-right: 3%;
+	background: @foreground;
+	color: @background;
+
+	h1 {
+		margin-top: 0;
+		line-height: 1.5em;
+	}
+}
+section, blockquote {
+	h1 { font-size: 1.7em; }
+	section, blockquote {
+		h1 { font-size: 1.4em; }
+		section, blockquote {
+			h1 { font-size: 1.1em; }
+		}
+	}
+}
+.hfeed {
+	list-style-type: none;
+	padding: 0;
+
+	.hentry {
+		margin-left: 2%;
+		margin-right: 2%;
+		margin-bottom: 0.5em;
+		padding-left: 1%;
+		padding-right: 1%;
+		padding-bottom: 0.5em;
+		list-style-type: none;
+		border-bottom: 1px solid (@background - #333);
+	}
+}
