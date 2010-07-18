@@ -25,34 +25,42 @@ module NNTP
 			c
 		}
 		headers[:date] = Time.parse(headers[:date]) if headers[:date]
+		headers[:article_num] = headers[:xref].split(':',2)[1].to_i if !headers[:article_num] && headers[:xref]
 		headers
 	end
 
-	def self.get_thread(nntp, message_id, start, max, num=10)
+	def self.get_thread(nntp, message_id, start, max, num=10, seen=nil)
+		seen ||= []
 		buf = []
 		while buf.length < num && start < max
 			nntp.over "#{start+1}-#{start+(num*4)}"
 			raise 'Error getting threads.' unless nntp.gets.split(' ')[0] == '224'
-			buf += nntp.gets_multiline.select {|line| line.split("\t")[5].to_s.split(/,\s*/)[0] == message_id }.map {|line| overview_to_hash line }
+			buf += nntp.gets_multiline.select {|line|
+				line = line.split("\t")
+				line[5].to_s.split(/,\s*/)[0] == message_id && !seen.index(line[4])
+			}.map {|line| overview_to_hash line }
 			start += num*4
 		end
-		buf
+		buf.sort {|a,b| a[:date] <=> b[:date]}.slice(0,num)
 	end
 
-	def self.get_threads(nntp, max, num=10)
+	def self.get_threads(nntp, max, num=10, seen=nil)
+		seen ||= []
 		threads = {}
 		start = max - num*2
-		start = 1 if num == 0 # Get all when num=0
-		while threads.length < num
+		start = 1 if start < 1 || num == 0 # Never be negative, and get all when num=0
+		while threads.length < num && start > 0
 			nntp.over "#{start}-#{max}"
 			raise 'Error getting threads.' unless nntp.gets.split(' ')[0] == '224'
 			nntp.gets_multiline.each do |line|
 				line = overview_to_hash(line)
 				if line[:references].to_s == ''
+					next if seen.index(line[:message_id])
 					threads[line[:message_id]] = {} unless threads[line[:message_id]]
 					threads[line[:message_id]].merge!(line) if line[:references].to_s == ''
 				else
 					id = line[:references].to_s.split(/,\s*/).first
+					next if seen.index(id)
 					threads[id] = {} unless threads[id]
 					threads[id].merge!({:updated => line[:date]})
 				end

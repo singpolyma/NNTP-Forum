@@ -6,5 +6,12 @@
 	%body
 		!= include 'views/visible_header.haml'
 
-		%ol.hfeed
-			!= include_for_each threads, 'views/thread_summary.haml'
+		-if threads.length > 0
+			%ol.hfeed
+				!= include_for_each threads, 'views/thread_summary.haml'
+		-else
+			%p There are no more threads to display.
+
+		-if threads.last
+			%a.prev{:href => "?#{seen}&start=#{threads.last[:article_num]}"}
+				Older »

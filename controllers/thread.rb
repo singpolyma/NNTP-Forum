@@ -5,7 +5,7 @@ require 'bluecloth'
 
 class ThreadController < ApplicationController
 	def initialize(env)
-		@env = env
+		super
 		@env['router.params'][:message_id] = "<#{@env['router.params'][:message_id]}>" unless @env['router.params'][:message_id][0] == '<'
 		SimpleProtocol.new(:uri => env['config']['server'], :default_port => 119) { |nntp|
 			nntp.group @env['config']['server'].path[1..-1]
@@ -14,8 +14,7 @@ class ThreadController < ApplicationController
 			raise "Error getting article for #{@env['router.params'][:message_id]}." unless nntp.gets.split(' ')[0] == '220'
 			headers, @body = nntp.gets_multiline.join("\n").split("\n\n", 2)
 			@headers = NNTP::headers_to_hash(headers.split("\n"))
-			article_number = @headers[:xref].split(':',2)[1].to_i
-			@threads = NNTP::get_thread(nntp, @env['router.params'][:message_id], article_number, max)
+			@threads = NNTP::get_thread(nntp, @env['router.params'][:message_id], (@req['start'] || @headers[:article_num]).to_i, max, @req['start'] ? 10 : 9, @req['seen'])
 			@threads.map! {|thread|
 				nntp.body(thread[:message_id])
 				raise "Error getting body for #{thread[:message_id]}." unless nntp.gets.split(' ')[0] == '222'

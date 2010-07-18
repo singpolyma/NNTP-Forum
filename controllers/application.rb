@@ -2,6 +2,16 @@ require 'lib/haml_controller'
 require 'json'
 
 class ApplicationController < HamlController
+	def initialize(env)
+		super()
+		@env = env
+		@req = Rack::Request.new(env)
+	end
+
+	def seen
+		'seen[]=' + ((@req['seen'] || []) + threads.map {|t| t[:message_id]}).last(100).join('&seen[]=')
+	end
+
 	def recognized_types
 		['text/html', 'application/xhtml+xml', 'text/plain', 'application/json', 'application/rss+xml']
 	end
@@ -16,7 +26,7 @@ class ApplicationController < HamlController
 
 	def render(args={})
 		return @error if @error
-		args[:content_type] = Rack::Request.new(@env).accept_media_types.select {|type| recognized_types.index(type) }.first
+		args[:content_type] = @req.accept_media_types.select {|type| recognized_types.index(type) }.first
 		case args[:content_type]
 			when 'text/plain'
 				string = @threads.map {|thread|

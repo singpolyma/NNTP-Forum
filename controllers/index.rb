@@ -3,11 +3,11 @@ require 'lib/nntp'
 
 class IndexController < ApplicationController
 	def initialize(env)
-		@env = env
+		super
 		SimpleProtocol.new(:uri => env['config']['server'], :default_port => 119) { |nntp|
 			nntp.group @env['config']['server'].path[1..-1]
-			max = nntp.gets.split(' ')[3].to_i
-			@threads = NNTP::get_threads(nntp, max)
+			max = nntp.gets.split(' ')[3]
+			@threads = NNTP::get_threads(nntp, (@req['start'] || max).to_i, 10, @req['seen'])
 		}
 	rescue Exception
 		@error = [500, {'Content-Type' => 'text/plain'}, 'General Error.']

@@ -10,5 +10,12 @@
 			%h1
 				= @headers[:subject]
 
-			%ol.hfeed
-				!= include_for_each threads, 'views/thread_summary.haml'
+			-if threads.length > 0
+				%ol.hfeed
+					!= include_for_each threads, 'views/thread_summary.haml'
+			-else
+				%p There are no more posts in this thread.
+
+		-if threads.last
+			%a.prev{:href => "?#{seen}&start=#{threads.last[:article_num]}"}
+				Older »
