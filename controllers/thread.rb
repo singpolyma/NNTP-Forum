@@ -24,7 +24,7 @@ class ThreadController < ApplicationController
 			}
 			@threads.unshift(@headers.merge({:body => @body.force_encoding('utf-8')})) unless @req['start']
 			@threads.map {|thread|
-				if (email = thread[:from].to_s.match(/<([^>]+)>/)[1])
+				if (email = thread[:from].to_s.match(/<([^>]+)>/)) && (email = email[1])
 					thread[:photo] = 'http://www.gravatar.com/avatar/' + Digest::MD5.hexdigest(email.downcase) + '?r=g&d=identicon&size=64'
 				end
 				encoding = thread[:body].encoding # Silly hack because BlueCloth forgets the encoding
