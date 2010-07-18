@@ -9,6 +9,11 @@ html, body {
 }
 a {
 	color: @foreground + #00b;
+	text-decoration: none;
+
+	:hover, :active {
+		color: @foreground + #b00;
+	}
 }
 h1 {
 	font-size: 2em;
@@ -24,6 +29,11 @@ header {
 	h1 {
 		margin-top: 0;
 		line-height: 1.5em;
+
+		a {
+			color: @background;
+			text-decoration: none;
+		}
 	}
 }
 section, blockquote {
@@ -49,4 +59,7 @@ section, blockquote {
 		list-style-type: none;
 		border-bottom: 1px solid (@background - #333);
 	}
+}
+body > a, body > p, body > section > p {
+	padding-left: 4%;
 }
