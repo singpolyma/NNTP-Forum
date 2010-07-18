@@ -6,6 +6,9 @@ unless Encoding.respond_to?:default_internal
 		def self.default_internal; end
 	end
 end
+unless defined?(Encoding::UndefinedConversionError)
+	class Encoding::UndefinedConversionError; end
+end
 
 class HamlController
 	def title

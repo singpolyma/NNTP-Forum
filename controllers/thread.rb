@@ -19,15 +19,16 @@ class ThreadController < ApplicationController
 			@threads.map! {|thread|
 				nntp.body(thread[:message_id])
 				raise "Error getting body for #{thread[:message_id]}." unless nntp.gets.split(' ')[0] == '222'
-				thread[:body] = nntp.gets_multiline.join("\n")
+				thread[:body] = nntp.gets_multiline.join("\n").force_encoding('utf-8')
 				thread
 			}
-			@threads.unshift(@headers.merge({:body => @body}))
+			@threads.unshift(@headers.merge({:body => @body.force_encoding('utf-8')})) unless @req['start']
 			@threads.map {|thread|
 				if (email = thread[:from].to_s.match(/<([^>]+)>/)[1])
 					thread[:photo] = 'http://www.gravatar.com/avatar/' + Digest::MD5.hexdigest(email.downcase) + '?r=g&d=identicon&size=64'
 				end
-				thread[:body] = BlueCloth.new(thread[:body], :escape_html => true).to_html
+				encoding = thread[:body].encoding # Silly hack because BlueCloth forgets the encoding
+				thread[:body] = BlueCloth.new(thread[:body].gsub(/</,'&lt;').gsub(/>/,'&gt;'), :escape_html => true).to_html.force_encoding(encoding)
 				thread
 			}
 		}

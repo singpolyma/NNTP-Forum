@@ -20,7 +20,7 @@ module NNTP
 
 	def self.headers_to_hash(headers)
 		headers = headers.inject({}) {|c, line|
-			line = line.split(/:\s+/,2)
+			line = line.force_encoding('utf-8').split(/:\s+/,2)
 			c[line[0].downcase.sub(/-/,'_').intern] = line[1]
 			c
 		}
