@@ -1,2 +1,5 @@
+-# encoding: utf-8
 %header
-	%h1= @env['config']['title']
+	%h1
+		%a.home{:href => @env['config']['subdirectory']}
+			=@env['config']['title']
