@@ -6,7 +6,7 @@
 		-if item[:photo]
 			%img.photo{:src => item[:photo], :alt => "Avatar"}
 		%span.fn
-			= item[:from].sub(/<[^>]*>\s*/,'')
+			= item[:from].sub(/"?\s*<[^>]*>\s*/,'').sub(/^"/, '')
 	%time.published{:datetime => item[:date].iso8601}
 		= item[:date].strftime('%Y-%m-%d')
 	%time.updated{:datetime => (item[:updated] || item[:date]).iso8601}
