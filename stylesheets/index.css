@@ -1,0 +1,16 @@
+.hfeed .hentry .entry-title {
+  display: block;
+  margin-bottom: 0.3em;
+}
+.hfeed .hentry .author { padding-right: 1.5em; }
+.hfeed .hentry .author:before { content: "Started by: "; }
+.hfeed .hentry .published { display: none; }
+.hfeed .hentry .author {
+  font-size: 0.6em;
+  color: #555555;
+}
+.hfeed .hentry .updated {
+  font-size: 0.6em;
+  color: #555555;
+}
+.hfeed .hentry .updated:before { content: "Last post: "; }

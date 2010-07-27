@@ -1,0 +1,20 @@
+body > section > h1 {
+  margin-left: 2%;
+  margin-right: 2%;
+  padding-left: 1%;
+  padding-right: 1%;
+  line-height: 1.4em;
+  background: #666677;
+}
+.hentry .entry-title { display: none; }
+.hentry .author {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 1em;
+}
+.hentry .photo {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 1em;
+}
+.hentry .updated { display: none; }

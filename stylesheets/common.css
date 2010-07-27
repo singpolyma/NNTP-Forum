@@ -1,0 +1,61 @@
+html, body {
+  background: #cccccc;
+  color: #000000;
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+}
+a {
+  color: #0000bb;
+  text-decoration: none;
+}
+a:hover { color: #bb0000; }
+a:active { color: #bb0000; }
+h1 { font-size: 2em; }
+header {
+  display: block;
+  margin: 0;
+  padding-left: 3%;
+  padding-right: 3%;
+  background: #000000;
+  color: #cccccc;
+}
+header h1 {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+header h1 a {
+  color: #cccccc;
+  text-decoration: none;
+}
+section h1 { font-size: 1.7em; }
+section section h1 { font-size: 1.4em; }
+section section section h1 { font-size: 1.1em; }
+section section blockquote h1 { font-size: 1.1em; }
+section blockquote h1 { font-size: 1.4em; }
+section blockquote section h1 { font-size: 1.1em; }
+section blockquote blockquote h1 { font-size: 1.1em; }
+blockquote h1 { font-size: 1.7em; }
+blockquote section h1 { font-size: 1.4em; }
+blockquote section section h1 { font-size: 1.1em; }
+blockquote section blockquote h1 { font-size: 1.1em; }
+blockquote blockquote h1 { font-size: 1.4em; }
+blockquote blockquote section h1 { font-size: 1.1em; }
+blockquote blockquote blockquote h1 { font-size: 1.1em; }
+.hfeed {
+  list-style-type: none;
+  padding: 0;
+}
+.hfeed .hentry {
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 0.5em;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-bottom: 0.5em;
+  list-style-type: none;
+  border-bottom: 1px solid #999999;
+}
+body > a { padding-left: 4%; }
+body > p { padding-left: 4%; }
+body > section > p { padding-left: 4%; }
