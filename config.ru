@@ -15,6 +15,7 @@ $config = YAML::load_file('config.yaml')
 use Rack::Reloader
 use Rack::ContentLength
 use PathInfoFix
+use Rack::Static, :urls => ['/stylesheets'] # Serve static files if no real server is present
 use SubdirectoryRouting, $config['subdirectory'].to_s
 #use Rack::SupportedMediaTypes, ['application/xhtml+xml', 'text/html', 'text/plain']
 
