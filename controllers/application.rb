@@ -27,7 +27,7 @@ class ApplicationController < HamlController
 	def render(args={})
 		return @error if @error
 		args[:content_type] = @req.accept_media_types.select {|type| recognized_types.index(type) }.first
-		case args[:content_type]
+		r = case args[:content_type]
 			when 'text/plain'
 				string = @threads.map {|thread|
 					body = thread[:body]
@@ -47,5 +47,9 @@ class ApplicationController < HamlController
 				args[:content_type] += '; charset=utf-8' if args[:content_type]
 				super(args)
 		end
+		# Cache headers. Varnish likes Cache-Control.
+		last_modified = (@threads.map {|thread| thread[:date]}.sort.last + 240)
+		r[1].merge!({'Vary' => 'Accept', 'Cache-Control' => 'public, max-age=240', 'Last-Modified' => last_modified.rfc2822})
+		r
 	end
 end
