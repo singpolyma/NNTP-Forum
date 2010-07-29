@@ -13,6 +13,8 @@ All dependencies **can** be installed without rubygems.  I have done it.  For mo
 * [[http://json.rubyforge.org|JSON]]
 * [[http://deveiate.org/projects/BlueCloth/|BlueCloth 2]]
 * [[http://haml-lang.com|Haml]]
+* [[http://nokogiri.org|Nokogiri]]
+* [[http://github.com/mikel/mail|Mail]]
 * [[http://lesscss.org|LESS]]
 ** [[http://github.com/cloudhead/mutter|mutter]]
 ** [[http://treetop.rubyforge.org|Treetop]]

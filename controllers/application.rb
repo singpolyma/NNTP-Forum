@@ -32,6 +32,7 @@ class ApplicationController < HamlController
 				string = @threads.map {|thread|
 					body = thread[:body]
 					thread.delete(:body)
+					thread.delete(:mime)
 					thread.map { |k,v|
 						"#{k.to_s.gsub(/_/,'-')}: #{v}" if v
 					}.compact.join("\n") + "\n\n#{body}"
@@ -40,6 +41,7 @@ class ApplicationController < HamlController
 			when 'application/rss+xml'
 				[200, {'Content-Type' => 'application/rss+xml; charset=utf-8'}, self.include('views/rss.haml')]
 			when 'application/json'
+				@threads.each {|thread| thread.delete(:mime)}
 				[200, {'Content-Type' => 'application/json; charset=utf-8'}, @threads.to_json]
 			else
 				args[:content_type] += '; charset=utf-8' if args[:content_type]
