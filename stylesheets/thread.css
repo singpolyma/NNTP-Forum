@@ -18,3 +18,12 @@ body > section > h1 {
   padding-right: 1em;
 }
 .hentry .updated { display: none; }
+.newsgroups {
+  display: inline;
+  padding: 0px;
+}
+.newsgroups li {
+  display: inline;
+  font-size: 0.9em;
+}
+.followup { font-size: 0.9em; }
