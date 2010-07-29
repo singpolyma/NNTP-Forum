@@ -22,13 +22,13 @@ use SubdirectoryRouting, $config['subdirectory'].to_s
 run HttpRouter.new {
 	$config['server'] = URI::parse($config['server'])
 
-	get('/thread/:message_id/?').to { |env|
+	get('/thread/:message_id/?').head.to { |env|
 		env['config'] = $config
 		require 'controllers/thread'
 		ThreadController.new(env).render
 	}
 
-	get('/?').to { |env|
+	get('/?').head.to { |env|
 		env['config'] = $config
 		require 'controllers/index'
 		IndexController.new(env).render
