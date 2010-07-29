@@ -29,6 +29,8 @@ p thread
 				end
 				encoding = thread[:body].encoding # Silly hack because BlueCloth forgets the encoding
 				thread[:body] = BlueCloth.new(thread[:body].gsub(/</,'&lt;'), :escape_html => true).to_html.force_encoding(encoding)
+
+				(thread[:newsgroups] || []).reject! {|n| n == @env['config']['server'].path[1..-1]}
 				thread
 			}
 		}

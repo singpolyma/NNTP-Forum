@@ -25,6 +25,7 @@ module NNTP
 			c
 		}
 		headers[:date] = Time.parse(headers[:date]) if headers[:date]
+		headers[:newsgroups] = headers[:newsgroups].split(/,\s*/) if headers[:newsgroups]
 		headers[:article_num] = headers[:xref].split(':',2)[1].to_i if !headers[:article_num] && headers[:xref]
 		headers
 	end

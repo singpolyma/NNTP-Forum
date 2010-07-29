@@ -11,6 +11,13 @@
 		= item[:date].strftime('%Y-%m-%d')
 	%time.updated{:datetime => (item[:updated] || item[:date]).iso8601}
 		= (item[:updated] || item[:date]).strftime('%Y-%m-%d')
+	-if item[:newsgroups] && item[:newsgroups].length > 0
+		Also in:
+		%ul.newsgroups
+			!= each_tag item[:newsgroups], '%li= item'
+	-if item[:followup_to]
+		%span.followup
+			Replies go to #{item[:followup_to]}
 	-if item[:body]
 		%div.entry-content
 			!= item[:body]
