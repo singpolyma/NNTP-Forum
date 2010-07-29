@@ -4,3 +4,5 @@ rack-accept-media-types
 json
 bluecloth --version 2.0.7
 haml
+nokogiri
+mail
