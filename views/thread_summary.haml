@@ -1,6 +1,6 @@
 -# encoding: utf-8
 %li.hentry
-	%a.entry-title.bookmark(href="thread/#{item[:message_id][1..-2]}")
+	%a.entry-title(rel="bookmark" href="#{@env['config']['subdirectory']}/thread/#{item[:message_id][1..-2]}")
 		= item[:subject]
 	%span.author
 		-if item[:photo]
