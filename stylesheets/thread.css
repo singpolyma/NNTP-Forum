@@ -6,6 +6,10 @@ body > section > h1 {
   line-height: 1.4em;
   background: #666677;
 }
+body > section > h1 a {
+  padding-left: 1em;
+  font-size: 0.6em;
+}
 .hentry .entry-title { display: none; }
 .hentry .author {
   display: inline-block;
@@ -17,13 +21,23 @@ body > section > h1 {
   vertical-align: middle;
   padding-right: 1em;
 }
+.hentry .published {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 1em;
+}
+.hentry .action {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 1em;
+}
 .hentry .updated { display: none; }
-.newsgroups {
+.hentry .newsgroups {
   display: inline;
   padding: 0px;
 }
-.newsgroups li {
+.hentry .newsgroups li {
   display: inline;
   font-size: 0.9em;
 }
-.followup { font-size: 0.9em; }
+.hentry .followup { font-size: 0.9em; }

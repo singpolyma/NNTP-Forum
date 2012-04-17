@@ -7,12 +7,17 @@ body > section > h1 {
 	padding-right: 1%;
 	line-height: 1.4em;
 	background: (@background + #002)*0.5;
+
+	a {
+		padding-left: 1em;
+		font-size: 0.6em;
+	}
 }
 .hentry {
 	.entry-title {
 		display: none;
 	}
-	.author, .photo {
+	.author, .photo, .published, .action {
 		display: inline-block;
 		vertical-align: middle;
 		padding-right: 1em;
@@ -20,15 +25,15 @@ body > section > h1 {
 	.updated {
 		display: none;
 	}
-}
-.newsgroups {
-	display: inline;
-	padding: 0px;
-	li {
+	.newsgroups {
 		display: inline;
+		padding: 0px;
+		li {
+			display: inline;
+			font-size: 0.9em;
+		}
+	}
+	.followup {
 		font-size: 0.9em;
 	}
-}
-.followup {
-	font-size: 0.9em;
 }

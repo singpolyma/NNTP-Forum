@@ -1,0 +1,11 @@
+form {
+  margin: auto;
+  max-width: 70%;
+}
+textarea { max-with: 70%; }
+input { display: block; }
+label {
+  clear: left;
+  float: left;
+  width: 8em;
+}
