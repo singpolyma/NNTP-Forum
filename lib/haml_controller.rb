@@ -1,4 +1,5 @@
 require 'haml'
+require 'uri'
 
 # Hack to make ruby 1.9.0 work with new haml
 unless Encoding.respond_to?:default_internal
@@ -37,6 +38,10 @@ class HamlController
 			args[:item] = item
 			self.include(file, args)
 		end.join("\n")
+	end
+
+	def uri(format, *args)
+		format % (args.flatten.map {|i| URI::encode(i.to_s)})
 	end
 
 	def render(args={})
