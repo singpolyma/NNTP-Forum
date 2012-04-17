@@ -59,11 +59,13 @@ class ThreadController < ApplicationController
 					}
 					thread[:body] = doc.at('body').to_xhtml(:encoding => 'UTF-8').sub(/^<body>/, '').sub(/<\/body>$/, '').force_encoding('UTF-8')
 				else
-					thread[:body] = thread[:mime].text_part.decoded
+					thread[:body] = thread[:text]
 					encoding = thread[:body].encoding # Silly hack because BlueCloth forgets the encoding
 					thread[:body] = BlueCloth.new(thread[:body].gsub(/</,'&lt;'), :escape_html => true).to_html.force_encoding(encoding)
 				end
 
+				thread[:subject] = thread[:mime][:subject].decoded
+				thread[:from] = thread[:mime][:from].decoded
 				(thread[:newsgroups] || []).reject! {|n| n == @env['config']['server'].path[1..-1]}
 				thread
 			}
