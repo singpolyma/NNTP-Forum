@@ -24,7 +24,7 @@ class SimpleProtocol
 
 	def send_multiline(*args)
 		args.flatten!
-		args.map! {|line| line.gsub!(/\r|\n/, "\r\n") } # Normalize newlines
+		args.map! {|line| line.gsub(/\r\n/, "\n").gsub(/\r|\n/, "\r\n") } # Normalize newlines
 		send(args.join("\r\n") + "\r\n.\r\n") # Append terminator
 	end
 
