@@ -16,6 +16,10 @@ class ThreadController < ApplicationController
 			raise "Error getting article for #{@env['router.params'][:message_id]}." unless nntp.gets.split(' ')[0] == '220'
 			headers, @body = nntp.gets_multiline.join("\n").split("\n\n", 2)
 			@headers = NNTP::headers_to_hash(headers.split("\n"))
+			@mime = Mail::Message.new(@headers)
+			@headers[:subject] = @mime[:subject].decoded
+			@headers[:from] = @mime[:from].decoded
+
 			@threads = NNTP::get_thread(nntp, @env['router.params'][:message_id], (@req['start'] || @headers[:article_num]).to_i, max, @req['start'] ? 10 : 9, @req['seen'])
 			@threads.map! {|thread|
 				nntp.body(thread[:message_id])
@@ -24,7 +28,7 @@ class ThreadController < ApplicationController
 				thread
 			}
 			@threads.unshift(@headers.merge({:body => @body.force_encoding('utf-8')})) unless @req['start']
-			@threads.map {|thread|
+			@threads.map! {|thread|
 				if (email = thread[:from].to_s.match(/<([^>]+)>/)) && (email = email[1])
 					thread[:photo] = 'http://www.gravatar.com/avatar/' + Digest::MD5.hexdigest(email.downcase) + '?r=g&d=identicon&size=64'
 				end
@@ -36,6 +40,12 @@ class ThreadController < ApplicationController
 
 				thread[:mime] = Mail::Message.new(thread)
 				thread[:mime].body.split!(thread[:mime].boundary)
+				# The mail library can be a bit broken. Get the useful text part
+				if thread[:mime].body.parts.length > 1
+					thread[:text] = thread[:mime].body.parts.select {|p| p[:content_type].decoded =~ /^text\/plain/i && p.body.decoded != ''}.first.body.decoded
+				else
+					thread[:text] = thread[:mime].body.decoded
+				end
 				if thread[:mime].html_part
 					thread[:body] = thread[:mime].html_part.decoded
 					doc = Nokogiri::HTML(thread[:body])
