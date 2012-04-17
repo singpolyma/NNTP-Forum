@@ -56,27 +56,38 @@ module NNTP
 			nntp.gets_multiline.each do |line|
 				line = overview_to_hash(line)
 				if line[:references].to_s == ''
-					next if seen.index(line[:message_id])
-					threads[line[:message_id]] = {} unless threads[line[:message_id]]
-					threads[line[:message_id]].merge!(line) if line[:references].to_s == ''
+					next if seen.include?(line[:message_id])
+					threads[line[:message_id]] ||= {}
+					threads[line[:message_id]].merge!(line)
 				else
-					id = line[:references].to_s.split(/,\s*/).first
-					next if seen.index(id)
-					threads[id] = {} unless threads[id]
+					id = line[:references].to_s.scan(/<[^>]+>/)
+					id = id[0] if id
+					next if seen.include?(id)
+					threads[id] ||= {}
 					threads[id].merge!({:updated => line[:date]})
 				end
 			end
 			start -= num*2
 		end
-		threads.map do |id, thread|
+		threads.inject({}) do |h, (id, thread)|
 			if thread[:subject]
-				thread
+				h[id] = thread
 			else
-				nntp.head(id)
-				raise 'Error getting threads.' unless nntp.gets.split(' ')[0] == '221'
-				headers_to_hash(nntp.gets_multiline)
+				oldid = id
+				begin
+					nntp.head(id)
+					raise 'Error getting threads.' unless nntp.gets.split(' ')[0] == '221'
+					thread.delete(:references)
+					thread.merge!(headers_to_hash(nntp.gets_multiline))
+					id = thread[:references].to_s.scan(/<[^>]+>/)
+					id = id[0] if id
+					break if id == oldid # Detect infinite loop
+					oldid = id
+				end while thread[:references].to_s != ''
+				h[id] = thread
 			end
-		end.sort {|a,b| (b[:updated] || b[:date]) <=> (a[:updated] || a[:date])}.slice(0,num)
+			h
+		end.values.sort {|a,b| (b[:updated] || b[:date]) <=> (a[:updated] || a[:date])}.slice(0,num)
 	end
 
 end
