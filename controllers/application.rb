@@ -26,7 +26,7 @@ class ApplicationController < HamlController
 
 	def render(args={})
 		return @error if @error
-		args[:content_type] = @req.accept_media_types.select {|type| recognized_types.index(type) }.first
+		args[:content_type] = @req['_accept'] || @req.accept_media_types.select {|type| recognized_types.index(type) }.first
 		r = case args[:content_type]
 			when 'text/plain'
 				string = @threads.map {|thread|
