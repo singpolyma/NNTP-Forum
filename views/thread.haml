@@ -9,6 +9,9 @@
 		%section
 			%h1
 				= @headers[:subject]
+				-if @headers[:content_location]
+					%a{:rel => 'bookmark', :href => @headers[:content_location]}
+						original link
 
 			-if threads.length > 0
 				%ol.hfeed
