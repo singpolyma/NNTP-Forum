@@ -28,6 +28,18 @@ run HttpRouter.new {
 		ThreadController.new(env).render
 	}
 
+	get('/post/?').head.to { |env|
+		env['config'] = $config
+		require 'controllers/post'
+		PostController.new(env).get.render
+	}
+
+	post('/post/?').to { |env|
+		env['config'] = $config
+		require 'controllers/post'
+		PostController.new(env).post.render
+	}
+
 	get('/?').head.to { |env|
 		env['config'] = $config
 		require 'controllers/index'

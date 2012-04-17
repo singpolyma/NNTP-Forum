@@ -1,0 +1,31 @@
+-# encoding: utf-8
+!!! 5
+%html(xmlns="http://www.w3.org/1999/xhtml")
+	!= include 'views/invisible_header.haml'
+
+	%body
+		!= include 'views/visible_header.haml'
+
+		%form(method="post" action="")
+			-if @followup_to_poster
+				%p The poster has requested that replies be emailed directly to them.
+			-if @references && @references.length > 0
+				%input(type="hidden" name="references" value="#{@references.join(' ')}")
+				%input(type="hidden" name="in-reply-to" value="#{@references.last}")
+			%label(for="newsgroups")
+				Newsgroups
+			%input(type="text" id="newsgroups" name="newsgroups" value="#{@newsgroups}")
+			%label(for="fn")
+				Name
+			%input(type="text" id="fn" name="fn" value="")
+			%label(for="email")
+				Email
+			%input(type="text" id="email" name="email" value="")
+			%label(for="subject")
+				Subject
+			%input(type="text" id="subject" name="subject" value="#{@subject}")
+			-if @references && @references.length > 0
+				%p
+					Please only include what you are replying to above your reply, so that the body reads like a conversation.
+			%textarea(id="body" name="body" rows="10" cols="80")= @text
+			%input(type="submit" value="Send Reply")

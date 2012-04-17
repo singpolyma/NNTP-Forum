@@ -19,5 +19,9 @@
 		%span.followup
 			Replies go to #{item[:followup_to]}
 	-if item[:body]
+		%a.action{:href => uri("mailto:%s?subject=%s&In-Reply-To=%s&body=%s", item[:from], 'Re: ' + item[:subject].sub(/^Re:\s*/,''), item[:message_id], item[:text].gsub(/^[ \t]*/, '> '))}
+			Reply to author
+		%a.action(href="#{@env['config']['subdirectory']}/post/?message_id=#{item[:message_id][1..-2]}")
+			Reply to thread
 		%div.entry-content
 			!= item[:body]

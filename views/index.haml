@@ -6,6 +6,9 @@
 	%body
 		!= include 'views/visible_header.haml'
 
+		%a(class="new" href="#{@env['config']['subdirectory']}/post?newsgroups=#{@env['config']['server'].path[1..-1]}")
+			Post New Thread
+
 		-if threads.length > 0
 			%ol.hfeed
 				!= include_for_each threads, 'views/thread_summary.haml'
