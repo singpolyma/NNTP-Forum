@@ -61,7 +61,9 @@ class ThreadController < ApplicationController
 				else
 					thread[:body] = thread[:text].gsub(/</,'&lt;')
 					thread[:body] = thread[:body].gsub(/^>[ >]*/) {|s| s.gsub(/ /,'') + ' '}
-					thread[:body] = thread[:body].gsub(/(^[^>].*\n)>/, "\\1\n\n>").gsub(/^(>+)(.*)\n(\1>)/,"\\1\\2\n\\1\n\\3")
+					thread[:body] = thread[:body].gsub(/(^[^>].*\n)>/, "\\1\n\n>")
+					thread[:body] = thread[:body].gsub(/^(>+)(.+)\n(?=\1>)/,"\\1\\2\n\\1\n")
+					thread[:body] = thread[:body].gsub(/^(>+)>(.+)\n(?=\1[^>])/,"\\1>\\2\n\\1\n")
 					thread[:body] = Kramdown::Document.new(thread[:body]).to_html.encode('UTF-8')
 				end
 
