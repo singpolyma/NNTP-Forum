@@ -74,8 +74,15 @@ class PostController < ApplicationController
 				raise 'Error POSTing article: ' + m
 			end
 		}
-		@title = 'Message posted!'
-		@template = "-# encoding: utf-8
+
+		if @req.params['in-reply-to']
+			id = @req.params['in-reply-to'].strip.gsub(/^<|>$/,'')
+			url = "http#{@env['HTTPS']?'s':''}://#{@env['HTTP_HOST']}/#{@env['config']['subdirectory']+'/' if @env['config']['subdirectory'].to_s !~ /\/*/}thread/#{id}"
+			# Not really an error. Should make another way to override
+			@error = [303, {'Location' => url}, url]
+		else
+			@title = 'New thread posted!'
+			@template = "-# encoding: utf-8
 !!! 5
 %html(xmlns=\"http://www.w3.org/1999/xhtml\")
 	!= include 'views/invisible_header.haml'
@@ -83,7 +90,8 @@ class PostController < ApplicationController
 	%body
 		!= include 'views/visible_header.haml'
 
-		%p Message posted!"
+		%p New thread posted!"
+		end
 	rescue Exception
 		@error = [500, {'Content-Type' => 'text/plain'}, $!.message]
 	ensure
