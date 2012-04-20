@@ -38,7 +38,7 @@ module NNTP
 			raise 'Error getting threads.' unless nntp.gets.split(' ')[0] == '224'
 			buf += nntp.gets_multiline.select {|line|
 				line = line.split("\t")
-				line[5].to_s.split(/,\s*/)[0] == message_id && !seen.index(line[4])
+				line[5].to_s.split(/,\s*|\s+/).include?(message_id) && !seen.index(line[4])
 			}.map {|line| overview_to_hash line }
 			start += num*15
 		end
