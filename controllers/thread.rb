@@ -59,8 +59,8 @@ class ThreadController < ApplicationController
 					}
 					thread[:body] = doc.at('body').to_xhtml(:encoding => 'UTF-8').sub(/^<body>/, '').sub(/<\/body>$/, '').force_encoding('UTF-8')
 				else
-					thread[:body] = thread[:text]
-					thread[:body] = Kramdown::Document.new(thread[:body].gsub(/</,'&lt;')).to_html.encode('UTF-8')
+					thread[:body] = thread[:text].gsub(/</,'&lt;').gsub(/(^[^>].*\n)>/, "\\1\n\n>")
+					thread[:body] = Kramdown::Document.new(thread[:body]).to_html.encode('UTF-8')
 				end
 
 				thread[:subject] = thread[:mime][:subject].decoded
