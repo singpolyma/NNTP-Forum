@@ -26,6 +26,9 @@
 			%input(type="text" id="subject" name="subject" value="#{@subject}")
 			-if @references && @references.length > 0
 				%p
-					Please only include what you are replying to above your reply, so that the body reads like a conversation.
+					Please only include the text you are replying to above your reply, so that the body reads like a conversation.
 			%textarea(id="body" name="body" rows="10" cols="80")= @text
-			%input(type="submit" value="Send Reply")
+			-if @references && @references.length > 0
+				%input(type="submit" value="Post Reply")
+			-else
+				%input(type="submit" value="Post Message")
