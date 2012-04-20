@@ -2,7 +2,7 @@ require 'controllers/application'
 require 'lib/nntp'
 require 'digest'
 require 'nokogiri'
-require 'bluecloth'
+require 'kramdown'
 require 'mail'
 
 class ThreadController < ApplicationController
@@ -60,8 +60,7 @@ class ThreadController < ApplicationController
 					thread[:body] = doc.at('body').to_xhtml(:encoding => 'UTF-8').sub(/^<body>/, '').sub(/<\/body>$/, '').force_encoding('UTF-8')
 				else
 					thread[:body] = thread[:text]
-					encoding = thread[:body].encoding # Silly hack because BlueCloth forgets the encoding
-					thread[:body] = BlueCloth.new(thread[:body].gsub(/</,'&lt;'), :escape_html => true).to_html.force_encoding(encoding)
+					thread[:body] = Kramdown::Document.new(thread[:body].gsub(/</,'&lt;')).to_html.encode('UTF-8')
 				end
 
 				thread[:subject] = thread[:mime][:subject].decoded
