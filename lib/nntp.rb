@@ -79,8 +79,12 @@ module NNTP
 					raise 'Error getting threads.' unless nntp.gets.split(' ')[0] == '221'
 					thread.delete(:references)
 					thread.merge!(headers_to_hash(nntp.gets_multiline))
-					id = thread[:references].to_s.scan(/<[^>]+>/)
-					id = id[0] if id
+					if thread[:references].to_s == ''
+						id = thread[:message_id]
+					else
+						id = thread[:references].to_s.scan(/<[^>]+>/)
+						id = id[0] if id
+					end
 					break if id == oldid # Detect infinite loop
 					oldid = id
 				end while thread[:references].to_s != ''
