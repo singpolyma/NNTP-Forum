@@ -2,6 +2,8 @@
 # encoding: utf-8
 #\ -E deployment
 
+$: << File.dirname(__FILE__)
+
 require 'rack/accept_media_types'
 #require 'rack/supported_media_types'
 require 'lib/path_info_fix'
