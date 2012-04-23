@@ -13,7 +13,7 @@ All these dependencies are packaged for Debian at [[http://apt.singpolyma.net]].
 * [[http://github.com/joshbuddy/http_router|http_router]]
 ** [[http://github.com/hassox/url_mount|url_mount]]
 * [[http://json.rubyforge.org|JSON]]
-* [[http://deveiate.org/projects/BlueCloth/|BlueCloth 2]]
+* [[http://kramdown.rubyforge.org|kramdown]]
 * [[http://haml-lang.com|Haml]]
 * [[http://nokogiri.org|Nokogiri]]
 * [[http://github.com/mikel/mail|Mail]]
