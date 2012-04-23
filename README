@@ -4,7 +4,9 @@ This application uses rackup, and should support any server that supports rackup
 
 == Dependencies ==
 
-All dependencies **can** be installed without rubygems.  I have done it.  For most of them you can just copy the contents of lib/ into your ruby path.  Most of them are not packaged for real package managers, unfortunately.
+All dependencies **can** be installed without rubygems.  I have done it.  For most of them you can just copy the contents of lib/ into your ruby path.
+
+All these dependencies are packaged for Debian at [[http://apt.singpolyma.net]].
 
 * [[http://rack.rubyforge.org|Rack]]
 * [[http://github.com/mynyml/rack-accept-media-types|Rack accept-media-types]]
