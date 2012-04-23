@@ -42,7 +42,7 @@ class ThreadController < ApplicationController
 				thread[:mime].body.split!(thread[:mime].boundary)
 				# The mail library can be a bit broken. Get the useful text part
 				if thread[:mime].body.parts.length > 1
-					thread[:text] = thread[:mime].body.parts.select {|p| p[:content_type].decoded =~ /^text\/plain/i && p.body.decoded != ''}.first.body.decoded
+					thread[:text] = thread[:mime].body.parts.select {|p| p[:content_type] && p.body && p[:content_type].decoded =~ /^text\/plain/i && p.body.decoded != ''}.first.body.decoded
 				else
 					thread[:text] = thread[:mime].body.decoded
 				end
